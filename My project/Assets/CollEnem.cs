@@ -8,7 +8,7 @@ public class CollEnem : MonoBehaviour
 {
     //nuevocod
     public Text numerovidas;
-    public int vida = 5;
+    public int vida = 1;
     public float AttackAnimDuration = 3f;
     private bool paused;
 
