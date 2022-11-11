@@ -6,7 +6,7 @@ public class EstadoPatrulla : MonoBehaviour
 {
     public Transform[] WayPoints;
     public Color ColorEstado = Color.green;
-
+    private Animator anim;
     private MaquinaDeEstados maquinaDeEstados;
     private ControladorNavMesh controladorNavMesh;
     private ControladorVision controladorVision;
@@ -17,6 +17,7 @@ public class EstadoPatrulla : MonoBehaviour
         maquinaDeEstados = GetComponent<MaquinaDeEstados>();
         controladorNavMesh = GetComponent<ControladorNavMesh>();
         controladorVision = GetComponent<ControladorVision>();
+        anim = GetComponent<Animator>();
     }
 
     void Update()
@@ -39,6 +40,7 @@ public class EstadoPatrulla : MonoBehaviour
 
     void OnEnable()
     {
+        anim.SetBool("Walk Forward", true);
         maquinaDeEstados.MeshRendererIndicador.material.color = ColorEstado;
         ActualizarWayPointDestino();
     }
@@ -53,6 +55,7 @@ public class EstadoPatrulla : MonoBehaviour
         if (other.gameObject.CompareTag("Player") && enabled)
         {
             maquinaDeEstados.ActivarEstado(maquinaDeEstados.EstadoAlerta);
+            anim.SetBool("Walk Forward", false);
         }
     }
 }

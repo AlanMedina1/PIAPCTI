@@ -7,7 +7,7 @@ public class EstadoAlerta : MonoBehaviour
     public float velocidadGiroBusqueda = 120f;
     public float duracionBusqueda = 4f;
     public Color ColorEstado = Color.yellow;
-
+    private Animator anim;
     private MaquinaDeEstados maquinaDeEstados;
     private ControladorNavMesh controladorNavMesh;
     private ControladorVision controladorVision;
@@ -18,13 +18,16 @@ public class EstadoAlerta : MonoBehaviour
         maquinaDeEstados = GetComponent<MaquinaDeEstados>();
         controladorNavMesh = GetComponent<ControladorNavMesh>();
         controladorVision = GetComponent<ControladorVision>();
+        anim = GetComponent<Animator>();
     }
 
     void OnEnable()
     {
+        anim.SetBool("Run Forward", true);
         maquinaDeEstados.MeshRendererIndicador.material.color = ColorEstado;
         controladorNavMesh.DetenerNavMeshAgent();
         tiempoBuscando = 0f;
+
     }
 
 
@@ -43,7 +46,10 @@ public class EstadoAlerta : MonoBehaviour
         if (tiempoBuscando >= duracionBusqueda)
         {
             maquinaDeEstados.ActivarEstado(maquinaDeEstados.EstadoPatrulla);
+            anim.SetBool("Run Forward", false);
             return;
         }
+
+       
     }
 }
